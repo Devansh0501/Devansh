@@ -107,4 +107,209 @@ body {
 .letter {
   font-size:36px;
   font-weight:bold;
-  background:radial-gradient(circle,#fff,#ff77
+  background:radial-gradient(circle,#fff,#ff77b7);
+  color:#b30059;
+  padding:8px;
+  margin:4px;
+  border-radius:50%;
+  box-shadow:0 6px 14px rgba(0,0,0,0.18);
+  opacity:0;
+  transform:scale(0.5) translateY(30px);
+  transition:0.4s;
+}
+
+.letter.show {
+  opacity:1;
+  transform:scale(1) translateY(0);
+}
+
+.landing-title {
+  font-size:26px;
+  margin:8px 0;
+  color:#b30059;
+}
+
+.primary-button {
+  margin-top:12px;
+  padding:14px 30px;
+  border-radius:999px;
+  border:none;
+  background: linear-gradient(135deg,#ff3f88,#ff8fc4);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:16px;
+  box-shadow:0 12px 30px rgba(255,63,136,0.45);
+}
+
+.primary-button:hover { transform:scale(1.05); }
+
+/* Letter Page */
+.inner-wrapper {
+  max-width:900px;
+  width:100%;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+}
+
+@media(max-width:768px){
+  .inner-wrapper { grid-template-columns:1fr; }
+}
+
+.letter-card {
+  background:#fff;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.18);
+}
+
+.letter-body {
+  background:linear-gradient(135deg,#fff,#ffeaf4);
+  padding:16px;
+  border-radius:14px;
+  border:1px solid #ffd6e8;
+  min-height:260px;
+}
+
+.letter-body[contenteditable] { outline:none; }
+
+.her-name-reveal {
+  text-align:center;
+  margin-top:18px;
+  opacity:0;
+  transform:translateY(16px);
+  transition:0.8s;
+}
+
+.her-name-reveal.show { opacity:1; transform:translateY(0); }
+
+.her-name-text {
+  font-size:26px;
+  color:#b30059;
+}
+
+.back-button {
+  margin-top:12px;
+  border-radius:999px;
+  border:1px solid #ffd6e8;
+  background:#fff;
+  padding:8px 14px;
+  cursor:pointer;
+}
+
+/* Petal overlay */
+.petal {
+  position: fixed;
+  top:-20px;
+  font-size:18px;
+  animation: fall linear infinite;
+  color:#ff5fa2;
+  opacity:0.7;
+}
+
+@keyframes fall {
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<section class="screen active" id="landing-screen">
+  <div class="landing-card">
+    <div class="landing-inner">
+      <div style="text-align:center;">
+        <img src="cake.png" id="cake-image">
+        <div class="birthday-text">
+          <span class="letter">H</span><span class="letter">a</span><span class="letter">p</span><span class="letter">p</span><span class="letter">i</span><span class="letter">e</span><span class="letter">s</span><span class="letter">t</span>
+          <span class="letter">B</span><span class="letter">i</span><span class="letter">r</span><span class="letter">t</span><span class="letter">h</span><span class="letter">d</span><span class="letter">a</span><span class="letter">y</span>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="landing-title">A soft rose-petal surprise just for you 🌹</h2>
+        <button class="primary-button" id="open-letter-btn">💌 Open your birthday letter</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screen hidden" id="letter-screen">
+  <div class="inner-wrapper">
+    <div class="letter-card">
+      <div class="letter-body" contenteditable="true">
+        My love, today is your day…<br><br>
+        Replace this with your real message 💗
+      </div>
+
+      <div class="her-name-reveal" id="her-name-reveal">
+        <div>Always & only</div>
+        <div class="her-name-text">Priya</div>
+      </div>
+
+      <button class="back-button" id="back-btn">⬅ Back</button>
+    </div>
+
+    <div class="letter-card">
+      <h3>Why this letter exists</h3>
+      <p>Because some feelings deserve more than words… they deserve an experience.</p>
+    </div>
+  </div>
+</section>
+
+<audio id="bg-music" loop>
+  <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* Floating Hearts on Click */
+document.addEventListener("click", function(e) {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "💗";
+  heart.style.left = e.clientX + "px";
+  heart.style.top = e.clientY + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 3000);
+});
+
+/* Petal Rain */
+setInterval(() => {
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  petal.innerText = "🌸";
+  petal.style.left = Math.random() * window.innerWidth + "px";
+  petal.style.animationDuration = 6 + Math.random() * 6 + "s";
+  document.body.appendChild(petal);
+  setTimeout(() => petal.remove(), 10000);
+}, 600);
+
+/* Letter Animation */
+document.querySelectorAll(".letter").forEach((l,i)=>{
+  setTimeout(()=>l.classList.add("show"), i*120);
+});
+
+const openBtn = document.getElementById("open-letter-btn");
+const backBtn = document.getElementById("back-btn");
+const landing = document.getElementById("landing-screen");
+const letter = document.getElementById("letter-screen");
+const nameReveal = document.getElementById("her-name-reveal");
+const music = document.getElementById("bg-music");
+
+openBtn.onclick = () => {
+  landing.classList.add("hidden");
+  letter.classList.remove("hidden");
+  music.play().catch(()=>{});
+  setTimeout(()=> nameReveal.classList.add("show"), 2500);
+};
+
+backBtn.onclick = () => {
+  letter.classList.add("hidden");
+  landing.classList.remove("hidden");
+};
+</script>
+
+</body>
+</html>

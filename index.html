@@ -74,26 +74,17 @@
         .screen {
             height: 100vh;
             width: 100vw;
-            display: flex;
+            display: flex; /* we'll toggle this via JS */
             justify-content: center;
             align-items: center;
             padding: 16px;
             position: absolute;
             top: 0;
             left: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
-        .screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(20px);
-        }
-
-        .screen.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
+        .container {
+            text-align: center;
         }
 
         /* Floating hearts in background (landing) */
@@ -123,10 +114,6 @@
             0%   { transform: translateY(0) translateX(0); opacity: 0.3; }
             50%  { transform: translateY(-18px) translateX(6px); opacity: 0.7; }
             100% { transform: translateY(-32px) translateX(-6px); opacity: 0.1; }
-        }
-
-        .container {
-            text-align: center;
         }
 
         /* Landing card design */
@@ -609,7 +596,7 @@
 
 <body>
     <!-- Landing screen -->
-    <section class="screen screen-landing active" id="landing-screen">
+    <section class="screen screen-landing" id="landing-screen" style="display:flex;">
         <div class="container">
             <div class="landing-card">
                 <div class="corner-heart top-left">♡</div>
@@ -675,7 +662,7 @@
     </section>
 
     <!-- Inner letter screen -->
-    <section class="screen screen-inner hidden" id="letter-screen">
+    <section class="screen screen-inner" id="letter-screen" style="display:none;">
         <div class="inner-wrapper">
             <!-- Left: main letter -->
             <div class="letter-card">
@@ -786,7 +773,6 @@
     <!-- Background music (add birthday.mp3 next to this file) -->
     <audio id="bg-music" loop>
         <source src="birthday.mp3" type="audio/mpeg">
-        <!-- If the browser doesn't support audio, nothing breaks -->
     </audio>
 
     <script>
@@ -808,7 +794,6 @@
 
             // 💗 Floating heart on click (except on main buttons)
             document.addEventListener('click', function(e) {
-                // Skip heart if clicking on open-letter or back button
                 if (e.target.closest('#open-letter-btn') || e.target.closest('#back-btn')) {
                     return;
                 }
@@ -840,19 +825,15 @@
             }, 700);
 
             openBtn.addEventListener('click', () => {
-                landingScreen.classList.remove('active');
-                landingScreen.classList.add('hidden');
+                // Hide landing, show letter
+                landingScreen.style.display = 'none';
+                letterScreen.style.display = 'flex';
 
-                letterScreen.classList.remove('hidden');
-                letterScreen.classList.add('active');
-
-                // Start background music after user interaction
                 if (bgMusic) {
                     bgMusic.currentTime = 0;
                     bgMusic.play().catch(() => {});
                 }
 
-                // Reveal her name a bit after entering the letter page
                 if (herNameReveal) {
                     herNameReveal.classList.remove('show');
                     setTimeout(() => {
@@ -862,12 +843,10 @@
             });
 
             backBtn.addEventListener('click', () => {
-                letterScreen.classList.remove('active');
-                letterScreen.classList.add('hidden');
-
-                landingScreen.classList.remove('hidden');
-                landingScreen.classList.add('active');
-                // If you want music to stop when going back, uncomment:
+                // Show landing, hide letter
+                letterScreen.style.display = 'none';
+                landingScreen.style.display = 'flex';
+                // If you want to stop music on back, uncomment:
                 // if (bgMusic) bgMusic.pause();
             });
         });

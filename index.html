@@ -1,173 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Happy Birthday My Love 💖</title>
+    <meta charset="UTF-8">
+    <title>Romantic Birthday Cake</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-    body {
-        margin: 0;
-        background: linear-gradient(135deg, #ff9ce3, #c77dff);
-        font-family: 'Trebuchet MS', sans-serif;
-        color: white;
-        text-align: center;
-        overflow-x: hidden;
-    }
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffe6f2, #ffb3d9);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
 
-    h1 {
-        margin-top: 60px;
-        font-size: 48px;
-        text-shadow: 2px 2px 6px #000;
-    }
+        .container {
+            text-align: center;
+        }
 
-    /* Falling Hearts */
-    .heart {
-        position: fixed;
-        top: -10px;
-        color: #ff4dcd;
-        font-size: 20px;
-        animation: fall 4s linear infinite;
-        opacity: 0.9;
-        z-index: 0;
-    }
+        .cake {
+            position: relative;
+            margin-bottom: 20px;
+        }
 
-    @keyframes fall {
-        0% {transform: translateY(0) rotate(0deg);}
-        100% {transform: translateY(110vh) rotate(360deg);}
-    }
+        #cake-image {
+            width: 300px;
+            height: auto;
+            animation: float 3s ease-in-out infinite;
+        }
 
-    /* Bunny pop animation */
-    #bunny {
-        position: fixed;
-        bottom: -200px;
-        right: 30px;
-        font-size: 130px;
-        animation: bunnyPop 2s ease-out forwards;
-        filter: drop-shadow(0 0 10px pink);
-        z-index: 2;
-    }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-    @keyframes bunnyPop {
-        0% {transform: scale(0.1) translateY(200px); opacity: 0;}
-        40% {transform: scale(1.2) translateY(-20px); opacity: 1;}
-        60% {transform: scale(0.9);}
-        100% {transform: scale(1) translateY(0);}
-    }
+        /* Candles */
+        .candle {
+            position: absolute;
+            top: 50px;
+            width: 6px;
+            height: 35px;
+            background: #ffffff;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-    /* Cake Popup */
-    #cakePopup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        color: black;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.3);
-        display: none;
-        text-align: center;
-        animation: fadeIn 1s ease;
-        z-index: 3;
-    }
+        #candle1 { left: 120px; }
+        #candle2 { left: 145px; }
+        #candle3 { left: 170px; }
 
-    .cake {
-        font-size: 70px;
-        margin-bottom: 20px;
-    }
+        /* Flame */
+        .candle .flame {
+            width: 10px;
+            height: 16px;
+            background: radial-gradient(circle at 30% 30%, #fff9c4, #ff9800);
+            border-radius: 50%;
+            transform-origin: bottom center;
+            margin-top: -14px;
+            animation: flame-flicker 0.25s infinite alternate;
+            box-shadow: 0 0 6px rgba(255, 152, 0, 0.9);
+        }
 
-    #closePopup {
-        background: #ff4d94;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 18px;
-    }
+        @keyframes flame-flicker {
+            0% {
+                transform: translateX(-1px) scale(1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateX(1px) scale(1.1);
+                opacity: 1;
+            }
+        }
 
-    #mainCake {
-        font-size: 120px;
-        margin-top: 40px;
-        z-index: 1;
-        position: relative;
-    }
+        /* Text balloons */
+        .birthday-text {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
 
-    #blowCandlesBtn {
-        margin-top: 50px;
-        background: #ffffffaa;
-        color: #000;
-        padding: 15px 30px;
-        border: none;
-        border-radius: 15px;
-        font-size: 22px;
-        cursor: pointer;
-        z-index: 1;
-        position: relative;
-    }
+        .word-gap {
+            width: 24px;
+        }
 
-    @keyframes fadeIn {
-        from {opacity: 0;}
-        to {opacity: 1;}
-    }
-</style>
+        .letter {
+            display: inline-block;
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff3f88;
+            background: radial-gradient(circle, #ffe0f0, #ff69b4);
+            border-radius: 50%;
+            padding: 10px;
+            margin: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+
+            opacity: 0;
+            transform: translateY(20px) scale(0.6);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+
+            animation: balloon-float 4s ease-in-out infinite;
+            animation-play-state: paused;
+        }
+
+        @keyframes balloon-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(4deg); }
+            50% { transform: translateY(-10px) rotate(-4deg); }
+            75% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        .letter::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 1px;
+        }
+
+        .letter.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            animation-play-state: running;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container">
+        <div class="cake">
+            <!-- If your image does not load, replace src with your image file -->
+            <img src="cake.png" alt="Birthday Cake" id="cake-image">
 
-<h1>Happy Birthday, My Love 💕🎉</h1>
+            <div class="candle" id="candle1"><span class="flame"></span></div>
+            <div class="candle" id="candle2"><span class="flame"></span></div>
+            <div class="candle" id="candle3"><span class="flame"></span></div>
+        </div>
 
-<!-- Bunny Animation -->
-<div id="bunny">🐰💗</div>
+        <div class="birthday-text">
+            <span class="letter">H</span>
+            <span class="letter">a</span>
+            <span class="letter">p</span>
+            <span class="letter">p</span>
+            <span class="letter">i</span>
+            <span class="letter">e</span>
+            <span class="letter">s</span>
+            <span class="letter">t</span>
 
-<!-- Main Cake -->
-<div id="mainCake">🎂🕯️🕯️🕯️</div>
+            <span class="word-gap"></span>
 
-<!-- Blow Candles Button -->
-<button id="blowCandlesBtn">Blow Out the Candles 🎈</button>
+            <span class="letter">B</span>
+            <span class="letter">i</span>
+            <span class="letter">r</span>
+            <span class="letter">t</span>
+            <span class="letter">h</span>
+            <span class="letter">d</span>
+            <span class="letter">a</span>
+            <span class="letter">y</span>
+        </div>
+    </div>
 
-<!-- Popup -->
-<div id="cakePopup">
-    <div class="cake">🎂</div>
-    <h2>Surprise! 🎉</h2>
-    <p>You make my world brighter every day 💗</p>
-    <button id="closePopup">Close</button>
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-<script>
-    // Falling hearts generator
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "💗";
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.fontSize = (20 + Math.random() * 20) + "px";
-        heart.style.animationDuration = (3 + Math.random() * 2) + "s";
-        document.body.appendChild(heart);
+            // Candle glow flicker
+            const candles = document.querySelectorAll('.candle');
+            candles.forEach(candle => {
+                setInterval(() => {
+                    const randomOpacity = 0.85 + Math.random() * 0.15;
+                    candle.style.opacity = randomOpacity.toString();
+                }, 200);
+            });
 
-        setTimeout(() => {
-            heart.remove();
-        }, 5000);
-    }
+            // Sequential letter animation
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.classList.add('show');
+                }, index * 250);
+            });
 
-    setInterval(createHeart, 200);
-
-    // Show cake popup on load
-    window.onload = () => {
-        document.getElementById("cakePopup").style.display = "block";
-    };
-
-    // Close popup
-    document.getElementById("closePopup").onclick = () => {
-        document.getElementById("cakePopup").style.display = "none";
-    };
-
-    // Blow candles
-    document.getElementById("blowCandlesBtn").onclick = () => {
-        document.getElementById("mainCake").innerHTML = "🎂";
-        alert("You blew out the candles! 🎉💖");
-    };
-</script>
-
+        });
+    </script>
 </body>
 </html>

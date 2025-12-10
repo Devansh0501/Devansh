@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday My Love 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, #ff9ce3, #c77dff);
+        font-family: 'Trebuchet MS', sans-serif;
+        color: white;
+        text-align: center;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        margin-top: 60px;
+        font-size: 48px;
+        text-shadow: 2px 2px 6px #000;
+    }
+
+    /* Falling Hearts */
+    .heart {
+        position: fixed;
+        top: -10px;
+        color: #ff4dcd;
+        font-size: 20px;
+        animation: fall 4s linear infinite;
+        opacity: 0.9;
+        z-index: 0;
+    }
+
+    @keyframes fall {
+        0% {transform: translateY(0) rotate(0deg);}
+        100% {transform: translateY(110vh) rotate(360deg);}
+    }
+
+    /* Bunny pop animation */
+    #bunny {
+        position: fixed;
+        bottom: -200px;
+        right: 30px;
+        font-size: 130px;
+        animation: bunnyPop 2s ease-out forwards;
+        filter: drop-shadow(0 0 10px pink);
+        z-index: 2;
+    }
+
+    @keyframes bunnyPop {
+        0% {transform: scale(0.1) translateY(200px); opacity: 0;}
+        40% {transform: scale(1.2) translateY(-20px); opacity: 1;}
+        60% {transform: scale(0.9);}
+        100% {transform: scale(1) translateY(0);}
+    }
+
+    /* Cake Popup */
+    #cakePopup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        color: black;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        display: none;
+        text-align: center;
+        animation: fadeIn 1s ease;
+        z-index: 3;
+    }
+
+    .cake {
+        font-size: 70px;
+        margin-bottom: 20px;
+    }
+
+    #closePopup {
+        background: #ff4d94;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    #mainCake {
+        font-size: 120px;
+        margin-top: 40px;
+        z-index: 1;
+        position: relative;
+    }
+
+    #blowCandlesBtn {
+        margin-top: 50px;
+        background: #ffffffaa;
+        color: #000;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 15px;
+        font-size: 22px;
+        cursor: pointer;
+        z-index: 1;
+        position: relative;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Happy Birthday, My Love 💕🎉</h1>
+
+<!-- Bunny Animation -->
+<div id="bunny">🐰💗</div>
+
+<!-- Main Cake -->
+<div id="mainCake">🎂🕯️🕯️🕯️</div>
+
+<!-- Blow Candles Button -->
+<button id="blowCandlesBtn">Blow Out the Candles 🎈</button>
+
+<!-- Popup -->
+<div id="cakePopup">
+    <div class="cake">🎂</div>
+    <h2>Surprise! 🎉</h2>
+    <p>You make my world brighter every day 💗</p>
+    <button id="closePopup">Close</button>
+</div>
+
+<script>
+    // Falling hearts generator
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💗";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (20 + Math.random() * 20) + "px";
+        heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }
+
+    setInterval(createHeart, 200);
+
+    // Show cake popup on load
+    window.onload = () => {
+        document.getElementById("cakePopup").style.display = "block";
+    };
+
+    // Close popup
+    document.getElementById("closePopup").onclick = () => {
+        document.getElementById("cakePopup").style.display = "none";
+    };
+
+    // Blow candles
+    document.getElementById("blowCandlesBtn").onclick = () => {
+        document.getElementById("mainCake").innerHTML = "🎂";
+        alert("You blew out the candles! 🎉💖");
+    };
+</script>
+
+</body>
+</html>

@@ -23,7 +23,7 @@ body{
   -webkit-tap-highlight-color: transparent;
 }
 
-/* music fallback toggle */
+/* autoplay fallback */
 #music-toggle {
   position: fixed;
   left: 14px;
@@ -41,19 +41,7 @@ body{
   font-size:13px;
 }
 
-/* panels */
-.screen { position:relative; display:flex; align-items:center; justify-content:center; padding:18px; min-height:100vh; }
-.panel {
-  width:min(980px,96vw);
-  background: rgba(255,255,255,0.94);
-  border-radius:24px;
-  padding:22px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.18);
-  position:relative;
-  overflow:hidden;
-}
-
-/* faint background phrases */
+/* whisper background phrases */
 .whisper {
   position: absolute;
   font-size: 28px;
@@ -70,11 +58,22 @@ body{
 .w2{ right:8%; top:26%; animation: drift 20s linear infinite reverse; }
 .w3{ left:12%; bottom:8%; animation: drift 22s linear infinite; }
 .w4{ right:18%; bottom:20%; animation: drift 24s linear infinite reverse; }
-
 @keyframes drift {
   0% { transform: translateY(0) translateX(0); opacity: .08; }
   50% { transform: translateY(-18px) translateX(8px); opacity: .16; }
   100% { transform: translateY(0) translateX(-6px); opacity: .08; }
+}
+
+/* screens & panels */
+.screen { position:relative; display:flex; align-items:center; justify-content:center; padding:18px; min-height:100vh; }
+.panel {
+  width:min(980px,96vw);
+  background: rgba(255,255,255,0.94);
+  border-radius:24px;
+  padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.18);
+  position:relative;
+  overflow:hidden;
 }
 
 /* transitions */
@@ -93,7 +92,7 @@ body{
 .birthday-text { display:flex; flex-direction:column; align-items:center; gap:6px; margin-bottom:10px; }
 .birthday-line { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
 
-/* letters (balloon style) */
+/* balloon letters */
 .letter {
   padding:8px 10px; border-radius:999px; font-weight:800;
   background: radial-gradient(circle,#fff0f6,#ff9ec5);
@@ -104,7 +103,6 @@ body{
 .letter.show{ opacity:1; transform:translateY(0) scale(1) }
 @media (max-width:420px){ .letter{ font-size:30px; padding:6px 8px } }
 
-/* landing text block */
 .landing-text-block { text-align:left; }
 @media (max-width:820px){ .landing-text-block { text-align:center } }
 
@@ -114,7 +112,7 @@ body{
   box-shadow:0 12px 30px rgba(255,63,136,.28); font-size:15px;
 }
 
-/* letter screen layout */
+/* letter page layout */
 .inner-wrapper { display:grid; grid-template-columns: 3fr 2fr; gap:22px; width:100%; }
 @media (max-width:820px){ .inner-wrapper{ grid-template-columns:1fr } }
 
@@ -123,30 +121,25 @@ body{
 
 /* photo block */
 .photo-block { margin-bottom:14px; display:flex; flex-direction:column; gap:8px; }
-.photo-frame { border-radius:16px; border:2px solid #ffd4e8; overflow:hidden; background:#ffeef7; box-shadow:0 10px 32px rgba(0,0,0,.12); max-height:260px; }
+.photo-frame { border-radius:16px; border:2px solid #ffd4e8; overflow:hidden; background:#ffeef7; box-shadow:0 10px 32px rgba(0,0,0,.12); max-height:260px; cursor:pointer; }
 .photo-frame img { width:100%; height:auto; display:block; object-fit:cover; }
 .photo-caption { font-size:13px; color:#6b5566; background:rgba(255,240,247,0.9); border-radius:10px; padding:8px 10px; border:1px dashed #ffb3d6; }
 .photo-caption[contenteditable="true"]{ outline:none; }
 
 /* reasons wall */
 .reasons-box { margin-top:14px; padding:12px; border-radius:12px; background:linear-gradient(180deg,#fff,#fff6fb); border:1px solid #ffe2ef; }
-.reasons-text { min-height:48px; font-size:14px; color:#6b5566; display:flex; align-items:center; justify-content:center; text-align:center; padding:8px; }
+.reasons-text { min-height:48px; font-size:14px; color:#6b5566; display:flex; align-items:center; justify-content:center; text-align:center; padding:8px; transition:opacity .28s ease; }
 .reasons-btn { margin-top:8px; padding:8px 12px; border-radius:999px; border:none; background:#ff7fb1; color:white; cursor:pointer; }
 
-/* her name reveal + question block */
-.her-name-reveal { text-align:center; margin-top:16px; opacity:0; transform:translateY(12px); transition:all .8s cubic-bezier(.2,.9,.2,1); position:relative; }
-.her-name-reveal.show{ opacity:1; transform:translateY(0); }
-.question-block { margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+/* promise ring section (Option 1 - embedded) */
+.promise-section { margin-top:18px; padding:16px; border-radius:14px; background:linear-gradient(180deg,#fff7fb,#fff2f7); border:1px solid #ffd4e8; text-align:center; }
+.promise-ring { width:128px; height:128px; border-radius:999px; margin:10px auto; background: radial-gradient(circle at 30% 30%, #fff3fb,#ffd6eb); display:flex; align-items:center; justify-content:center; font-size:44px; color:var(--accent); box-shadow: inset 0 6px 18px rgba(255,127,177,.12); }
 
-/* question buttons */
+/* question and answers */
+.question-block { margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
 .answer-btn { padding:10px 16px; border-radius:999px; border:none; cursor:pointer; font-weight:700; box-shadow:0 8px 18px rgba(0,0,0,.12); }
 .yes-soft { background: linear-gradient(135deg,#ffd1e6,#ff8fbf); color:#6b003f; }
 .yes-bold { background: linear-gradient(135deg,#ff3f88,#ff9acb); color:white; }
-
-/* promise ring modal */
-.modal-backdrop { position:fixed; inset:0; background:rgba(20,8,12,0.42); display:flex; align-items:center; justify-content:center; z-index:1500; }
-.modal { width:min(720px,94vw); background:white; border-radius:18px; padding:22px; box-shadow:0 30px 90px rgba(0,0,0,.34); text-align:center; }
-.modal .ring { width:120px; height:120px; border-radius:999px; margin:12px auto; background: radial-gradient(circle at 30% 30%, #fff3fb,#ffd6eb); display:flex; align-items:center; justify-content:center; font-size:40px; color:var(--accent); box-shadow: inset 0 6px 18px rgba(255,127,177,.12); }
 
 /* click-heart & petals & burst hearts & confetti */
 .heart-click { position:fixed; font-size:14px; color:#ff4f94; pointer-events:none; animation:heartFloat 2.2s ease-out forwards; z-index:1100; }
@@ -167,7 +160,7 @@ body{
 </head>
 <body>
 
-<!-- soft background whispers -->
+<!-- whisper phrases (7) -->
 <div class="whisper w1">you are my calm place</div>
 <div class="whisper w2">you are my favorite feeling</div>
 <div class="whisper w3">you made me believe again</div>
@@ -203,7 +196,7 @@ body{
   </div>
 </section>
 
-<!-- LETTER -->
+<!-- LETTER (sequence: photo+letter -> reasons -> whispers (background) -> promise ring -> question) -->
 <section id="letter-screen" class="screen" style="display:none;">
   <div class="panel" id="letter-panel" style="width:92%;">
     <div class="inner-wrapper">
@@ -213,9 +206,9 @@ body{
           <h3 style="margin:0;font-family:Georgia,serif">A little note for your special day</h3>
         </div>
 
-        <!-- Photo block -->
+        <!-- 1) Photo + caption + editable letter -->
         <div class="photo-block">
-          <div class="photo-frame">
+          <div class="photo-frame" title="Tap to change photo">
             <img id="couple-photo" src="us-photo.jpg" alt="Us together" loading="lazy">
           </div>
           <div class="photo-caption" contenteditable="true">
@@ -229,11 +222,33 @@ body{
           <p>Always yours,<br><strong>[Your name here]</strong></p>
         </div>
 
+        <!-- 2) Reasons I Love You -->
+        <div class="reasons-box" style="margin-top:18px;">
+          <div style="font-weight:700;margin-bottom:8px;color:#4a2030">Reasons I love you</div>
+          <div id="reasons-text" class="reasons-text">Tap the button to reveal one reason at a time.</div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+            <button id="reasons-btn" class="reasons-btn">Reveal another reason</button>
+            <button id="auto-reasons-toggle" class="reasons-btn" style="background:#ffd1ec;color:#a8004b;">Auto</button>
+          </div>
+        </div>
+
+        <!-- 3) (soft whisper phrases are background elements already present) -->
+
+        <!-- 4) Promise Ring (embedded section) -->
+        <div class="promise-section" id="promise-section" aria-labelledby="promise-title">
+          <div class="promise-ring">💍</div>
+          <h4 id="promise-title" style="margin:8px 0 6px">My Promise to you</h4>
+          <p style="margin:0;color:#6b5566">
+            I promise to be your quiet place and your loud cheer. To hold you steady when the world trembles,
+            and to celebrate the small miraculous ways you make life softer.
+          </p>
+        </div>
+
+        <!-- 5) End question (appears after name reveal) -->
         <div class="her-name-reveal" id="her-name-reveal" aria-hidden="true">
           <div style="font-size:12px;color:#7b6a73;letter-spacing:.12em;text-transform:uppercase">Always & only</div>
           <div id="her-name-text" style="font-family:Georgia,serif;font-size:26px;color:var(--accent);margin-top:6px">Priya</div>
 
-          <!-- question block (appears after reveal) -->
           <div class="question-block" id="question-block" style="display:none; margin-top:12px;">
             <div style="text-align:center; width:100%;">
               <div style="font-size:15px;color:#6b5566;margin-bottom:8px">Can I have one more year of loving you?</div>
@@ -248,38 +263,21 @@ body{
         <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <button id="back-btn" class="primary-button" style="background:#fff;border:1px solid #ffd8e9;color:var(--accent)">⬅ Back to cake</button>
           <div class="small-note">Your text will remain until you refresh the page.</div>
-          <button id="open-promise" style="margin-left:auto;padding:8px 12px;border-radius:8px;border:none;background:#ffd1ec;color:#a8004b;cursor:pointer">Promise Ring ✨</button>
+          <button id="change-photo-cta" style="margin-left:auto;padding:8px 12px;border-radius:8px;border:none;background:#ffd1ec;color:#a8004b;cursor:pointer">Change photo ✨</button>
         </div>
       </div>
 
-      <aside class="letter-card right-col">
+      <!-- Right column: summary + optional controls -->
+      <aside class="letter-card right-col" aria-hidden="true">
         <h4 style="margin-top:0">Highlights</h4>
-        <p style="color:#7b6a73">A romantic layout. Reveal reasons, photo, and a cute end-question that leads to a celebration.</p>
-
-        <!-- Reasons wall -->
-        <div class="reasons-box" aria-live="polite">
-          <div style="font-weight:700;margin-bottom:8px;color:#4a2030">Reasons I love you</div>
-          <div id="reasons-text" class="reasons-text">Tap the button to reveal one reason at a time.</div>
-          <button id="reasons-btn" class="reasons-btn">Reveal another reason</button>
+        <p style="color:#7b6a73">A romantic, tidy flow: photo, letter, reasons, promise, then the final question that leads to a small celebration.</p>
+        <div style="margin-top:12px;font-size:13px;color:#6b5566">
+          Tip: tap your photo to change it. The page auto-saves your letter and photo locally.
         </div>
       </aside>
     </div>
   </div>
 </section>
-
-<!-- Promise modal -->
-<div id="promise-modal" class="modal-backdrop" style="display:none;">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="promise-title">
-    <div class="ring">💍</div>
-    <h2 id="promise-title" style="margin:6px 0 10px">My Promise</h2>
-    <p style="color:#665; margin:0 0 12px;">
-      I promise to be the quiet place you can come home to. To hold you, listen, and try every day to deserve your love.
-    </p>
-    <div style="margin-top:12px;">
-      <button id="close-promise" style="padding:10px 14px;border-radius:999px;border:none;background:linear-gradient(135deg,#ff3f88,#ff9acb);color:#fff;font-weight:800;cursor:pointer">Close</button>
-    </div>
-  </div>
-</div>
 
 <!-- audio -->
 <audio id="bg-music" loop preload="auto">
@@ -287,10 +285,9 @@ body{
 </audio>
 
 <script>
-/* ---------------- audio with fade-in + autoplay fallback ---------------- */
+/* ---------- audio fade/autoplay fallback ---------- */
 const audio = document.getElementById('bg-music');
 const musicToggle = document.getElementById('music-toggle');
-
 async function fadeInAudio(targetVolume = 0.55, duration = 1800){
   try{
     audio.volume = 0.0;
@@ -310,20 +307,14 @@ async function fadeInAudio(targetVolume = 0.55, duration = 1800){
     requestAnimationFrame(tick);
   });
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   fadeInAudio().catch(()=>{ musicToggle.style.display = 'inline-block' });
 });
-
 musicToggle.addEventListener('click', async ()=>{
-  try{
-    await audio.play();
-    await fadeInAudio();
-    musicToggle.style.display = 'none';
-  } catch(e){}
+  try{ await audio.play(); await fadeInAudio(); musicToggle.style.display='none'; } catch(e){}
 });
 
-/* ---------------- click heart (small) ---------------- */
+/* ---------- floating click hearts (small) ---------- */
 function spawnHeart(x,y){
   const node = document.createElement('div');
   node.className = 'heart-click';
@@ -333,17 +324,19 @@ function spawnHeart(x,y){
   document.body.appendChild(node);
   setTimeout(()=> node.remove(), 2200);
 }
+// skip hearts on main controls
 function clickHandler(e){
   const tgt = e.target;
-  if (tgt.closest('#open-letter-btn') || tgt.closest('#back-btn') || tgt.closest('#music-toggle') || tgt.closest('#reasons-btn') || tgt.closest('#open-promise') || tgt.closest('#close-promise') || tgt.closest('#yes-soft-btn') || tgt.closest('#yes-bold-btn')) return;
+  const skipSelectors = ['#open-letter-btn','#back-btn','#music-toggle','#reasons-btn','#auto-reasons-toggle','#change-photo-cta','#yes-soft-btn','#yes-bold-btn'];
+  for(const s of skipSelectors) if(tgt.closest(s)) return;
   const point = e.touches ? e.touches[0] : e;
-  const x = point.clientX ?? window.innerWidth/2;
-  const y = point.clientY ?? window.innerHeight/2;
+  const x = point.clientX || window.innerWidth/2;
+  const y = point.clientY || window.innerHeight/2;
   spawnHeart(x,y);
 }
 window.addEventListener('pointerdown', clickHandler, { passive:true });
 
-/* petals */
+/* ---------- petals ---------- */
 function spawnPetal(){
   const p = document.createElement('div');
   p.className = 'petal';
@@ -357,16 +350,12 @@ function spawnPetal(){
 setInterval(spawnPetal, 700);
 spawnPetal();
 
-/* letters reveal */
-document.querySelectorAll('.letter').forEach((el,i)=> setTimeout(()=> el.classList.add('show'), i*120));
-
-/* panels & transitions */
+/* ---------- letter open/close transitions ---------- */
 const landing = document.getElementById('landing-screen');
 const letter  = document.getElementById('letter-screen');
 const openBtn = document.getElementById('open-letter-btn');
 const backBtn = document.getElementById('back-btn');
 const herNameReveal = document.getElementById('her-name-reveal');
-const herNameText = document.getElementById('her-name-text');
 const questionBlock = document.getElementById('question-block');
 
 function showLetter(){
@@ -388,11 +377,9 @@ function showLetter(){
   questionBlock.style.display = 'none';
   setTimeout(()=> {
     herNameReveal.classList.add('show');
-    // show question after reveal
     setTimeout(()=> questionBlock.style.display = 'block', 900);
   }, 1600);
 }
-
 function showLanding(){
   const lp = document.getElementById('letter-panel');
   lp.classList.remove('fade-slide-in');
@@ -408,16 +395,15 @@ function showLanding(){
     questionBlock.style.display = 'none';
   }, { once:true });
 }
-
 openBtn.addEventListener('click', showLetter);
 backBtn.addEventListener('click', showLanding);
 
-/* ---------------- Reasons wall ---------------- */
+/* ---------- Reasons wall (1) ---------- */
 const reasons = [
   "You make small moments feel infinite.",
   "Your smile rewrites my worst days.",
   "You listen like love is a skill, and you’ve mastered it.",
-  "I love the way your eyes light up when you talk about something you adore.",
+  "I love how your eyes light up when you talk about something you adore.",
   "You gave me courage when I didn’t know how to ask for it.",
   "I admire the quiet strength behind your kindness.",
   "Your laugh is my favorite weather.",
@@ -433,6 +419,9 @@ const reasons = [
 let reasonIndex = 0;
 const reasonsBtn = document.getElementById('reasons-btn');
 const reasonsText = document.getElementById('reasons-text');
+const autoToggle = document.getElementById('auto-reasons-toggle');
+let autoMode = false;
+let autoInterval = null;
 
 function showNextReason(){
   const r = reasons[reasonIndex % reasons.length];
@@ -445,33 +434,32 @@ function showNextReason(){
 }
 reasonsBtn.addEventListener('click', showNextReason);
 
-/* ---------------- Promise modal ---------------- */
-const openPromise = document.getElementById('open-promise');
-const promiseModal = document.getElementById('promise-modal');
-const closePromise = document.getElementById('close-promise');
+autoToggle.addEventListener('click', ()=>{
+  autoMode = !autoMode;
+  autoToggle.textContent = autoMode ? 'Stop' : 'Auto';
+  if(autoMode){
+    autoInterval = setInterval(showNextReason, 2500);
+  } else {
+    clearInterval(autoInterval);
+  }
+});
 
-openPromise.addEventListener('click', ()=> { promiseModal.style.display='flex'; });
-closePromise.addEventListener('click', ()=> { promiseModal.style.display='none'; });
-
-/* ---------------- question answer & celebration ---------------- */
+/* ---------- name reveal burst & question (9) ---------- */
 const yesSoft = document.getElementById('yes-soft-btn');
 const yesBold = document.getElementById('yes-bold-btn');
 
 function celebrate(x,y){
-  // spawn soft heart-and-petal particles
-  for(let i=0;i<30;i++){
+  for(let i=0;i<28;i++){
     const el = document.createElement('div');
-    el.className = (Math.random() > 0.5) ? 'burst-heart' : 'confetti';
+    el.className = (Math.random()>0.5)?'burst-heart':'confetti';
     el.textContent = (el.className==='burst-heart') ? '❤' : '🌸';
     el.style.left = x + 'px';
     el.style.top  = y + 'px';
     document.body.appendChild(el);
-    // random movement
     const angle = Math.random()*Math.PI*2;
     const dist = 60 + Math.random()*160;
     const dx = Math.cos(angle)*dist;
     const dy = Math.sin(angle)*dist - 30;
-    // apply
     requestAnimationFrame(()=> {
       el.style.opacity = '1';
       el.style.transform = `translate(${dx}px, ${dy}px) scale(${0.9 + Math.random()*0.6})`;
@@ -485,38 +473,26 @@ function celebrate(x,y){
 }
 
 function onYesClick(e){
-  // center near button
   const rect = e.target.getBoundingClientRect();
   const cx = rect.left + rect.width/2;
   const cy = rect.top + rect.height/2 - 20;
   celebrate(cx, cy);
-  // a small message overlay
   const msg = document.createElement('div');
-  msg.style.position='fixed';
-  msg.style.left='50%'; msg.style.top='20%';
+  msg.style.position='fixed'; msg.style.left='50%'; msg.style.top='20%';
   msg.style.transform='translateX(-50%)';
   msg.style.background='linear-gradient(135deg,#ff9acb,#ff5f99)';
-  msg.style.color='white';
-  msg.style.padding='12px 18px';
-  msg.style.borderRadius='999px';
-  msg.style.boxShadow='0 12px 30px rgba(0,0,0,.18)';
-  msg.style.fontWeight='800';
-  msg.textContent = 'Yes forever ❤️';
+  msg.style.color='white'; msg.style.padding='12px 18px';
+  msg.style.borderRadius='999px'; msg.style.boxShadow='0 12px 30px rgba(0,0,0,.18)';
+  msg.style.fontWeight='800'; msg.textContent = 'Yes forever ❤️';
   document.body.appendChild(msg);
   setTimeout(()=> msg.remove(), 2200);
 }
-
 yesSoft.addEventListener('click', onYesClick);
 yesBold.addEventListener('click', onYesClick);
 
-/* ---------------- Accessibility & keyboard ---------------- */
-openBtn.addEventListener('keyup', (e)=> { if(e.key==='Enter') showLetter(); });
-backBtn.addEventListener('keyup', (e)=> { if(e.key==='Enter') showLanding(); });
-
-/* ---------------- optional: autosave letter & photo (simple) ---------------- */
+/* ---------- autosave letter + photo, uploader ---------- */
 const letterBody = document.getElementById('letter-body');
 const photoImg = document.getElementById('couple-photo');
-
 function saveState(){
   try {
     localStorage.setItem('birthday_letter', letterBody.innerHTML);
@@ -535,11 +511,9 @@ letterBody.addEventListener('input', saveState);
 window.addEventListener('beforeunload', saveState);
 document.addEventListener('DOMContentLoaded', loadState);
 
-/* image uploader (optional) - create input dynamically for privacy */
+/* image uploader */
 const uploader = document.createElement('input');
-uploader.type = 'file';
-uploader.accept = 'image/*';
-uploader.style.display = 'none';
+uploader.type = 'file'; uploader.accept = 'image/*'; uploader.style.display = 'none';
 document.body.appendChild(uploader);
 uploader.addEventListener('change', (ev)=> {
   const f = ev.target.files && ev.target.files[0];
@@ -549,9 +523,15 @@ uploader.addEventListener('change', (ev)=> {
   saveState();
   setTimeout(()=> URL.revokeObjectURL(url), 60000);
 });
-/* open file picker when clicking photo-frame */
 document.querySelector('.photo-frame').addEventListener('click', ()=> uploader.click());
+document.getElementById('change-photo-cta').addEventListener('click', ()=> uploader.click());
 
+/* reveal letters */
+document.querySelectorAll('.letter').forEach((el,i)=> setTimeout(()=> el.classList.add('show'), i*120));
+
+/* accessibility: keyboard open/back */
+openBtn.addEventListener('keyup', (e)=> { if(e.key==='Enter') showLetter(); });
+backBtn.addEventListener('keyup', (e)=> { if(e.key==='Enter') showLanding(); });
 </script>
 </body>
 </html>

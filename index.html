@@ -160,7 +160,7 @@ body{
 </head>
 <body>
 
-<!-- whisper phrases (7) -->
+<!-- whisper phrases (soft background) -->
 <div class="whisper w1">you are my calm place</div>
 <div class="whisper w2">you are my favorite feeling</div>
 <div class="whisper w3">you made me believe again</div>
@@ -196,18 +196,37 @@ body{
   </div>
 </section>
 
-<!-- LETTER (sequence: photo+letter -> reasons -> whispers (background) -> promise ring -> question) -->
+<!-- LETTER (sequence changed per request) -->
 <section id="letter-screen" class="screen" style="display:none;">
   <div class="panel" id="letter-panel" style="width:92%;">
     <div class="inner-wrapper">
       <div class="letter-card">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="background:rgba(255,105,180,.08);padding:6px;border-radius:8px;font-weight:700;color:var(--accent)">💗 From me to you</div>
-          <h3 style="margin:0;font-family:Georgia,serif">A little note for your special day</h3>
+
+        <!-- 1) Name Reveal (moved to top before reasons) -->
+        <div class="her-name-reveal" id="her-name-reveal" aria-hidden="true" style="margin-bottom:18px;">
+            <div style="font-size:12px;color:#7b6a73;letter-spacing:.12em;text-transform:uppercase">Always & only</div>
+            <div id="her-name-text" style="font-family:Georgia,serif;font-size:26px;color:var(--accent);margin-top:6px">Priya</div>
         </div>
 
-        <!-- 1) Photo + caption + editable letter -->
-        <div class="photo-block">
+        <!-- 2) Reasons I Love You -->
+        <div class="reasons-box" style="margin-top:6px;">
+            <div style="font-weight:700;margin-bottom:8px;color:#4a2030">Reasons I love you</div>
+            <div id="reasons-text" class="reasons-text">Tap the button to reveal one reason at a time.</div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+                <button id="reasons-btn" class="reasons-btn">Reveal another reason</button>
+                <button id="auto-reasons-toggle" class="reasons-btn" style="background:#ffd1ec;color:#a8004b;">Auto</button>
+            </div>
+        </div>
+
+        <!-- 3) Editable Letter -->
+        <div id="letter-body" class="letter-body" contenteditable="true" aria-label="Editable letter body" style="margin-top:20px;">
+            <p>My love,</p>
+            <p>Today is your day. Replace this with your own message — your memories, promises, and tiny jokes that only we understand.</p>
+            <p>Always yours,<br><strong>[Your name here]</strong></p>
+        </div>
+
+        <!-- 4) Photo Section (moved lower, before promise) -->
+        <div class="photo-block" style="margin-top:20px;">
           <div class="photo-frame" title="Tap to change photo">
             <img id="couple-photo" src="us-photo.jpg" alt="Us together" loading="lazy">
           </div>
@@ -216,61 +235,39 @@ body{
           </div>
         </div>
 
-        <div id="letter-body" class="letter-body" contenteditable="true" aria-label="Editable letter body">
-          <p>My love,</p>
-          <p>Today is your day. Replace this with your own message — your memories, promises, and tiny jokes that only we understand.</p>
-          <p>Always yours,<br><strong>[Your name here]</strong></p>
-        </div>
-
-        <!-- 2) Reasons I Love You -->
-        <div class="reasons-box" style="margin-top:18px;">
-          <div style="font-weight:700;margin-bottom:8px;color:#4a2030">Reasons I love you</div>
-          <div id="reasons-text" class="reasons-text">Tap the button to reveal one reason at a time.</div>
-          <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
-            <button id="reasons-btn" class="reasons-btn">Reveal another reason</button>
-            <button id="auto-reasons-toggle" class="reasons-btn" style="background:#ffd1ec;color:#a8004b;">Auto</button>
-          </div>
-        </div>
-
-        <!-- 3) (soft whisper phrases are background elements already present) -->
-
-        <!-- 4) Promise Ring (embedded section) -->
-        <div class="promise-section" id="promise-section" aria-labelledby="promise-title">
+        <!-- 5) Promise Ring Section (embedded) -->
+        <div class="promise-section" id="promise-section" aria-labelledby="promise-title" style="margin-top:24px;">
           <div class="promise-ring">💍</div>
           <h4 id="promise-title" style="margin:8px 0 6px">My Promise to you</h4>
           <p style="margin:0;color:#6b5566">
             I promise to be your quiet place and your loud cheer. To hold you steady when the world trembles,
-            and to celebrate the small miraculous ways you make life softer.
+            and to celebrate the tiny miraculous ways you make life softer.
           </p>
         </div>
 
-        <!-- 5) End question (appears after name reveal) -->
-        <div class="her-name-reveal" id="her-name-reveal" aria-hidden="true">
-          <div style="font-size:12px;color:#7b6a73;letter-spacing:.12em;text-transform:uppercase">Always & only</div>
-          <div id="her-name-text" style="font-family:Georgia,serif;font-size:26px;color:var(--accent);margin-top:6px">Priya</div>
-
-          <div class="question-block" id="question-block" style="display:none; margin-top:12px;">
-            <div style="text-align:center; width:100%;">
-              <div style="font-size:15px;color:#6b5566;margin-bottom:8px">Can I have one more year of loving you?</div>
-              <div>
-                <button class="answer-btn yes-soft" id="yes-soft-btn">Yes 💗</button>
-                <button class="answer-btn yes-bold" id="yes-bold-btn">Obviously yes 😭❤️</button>
-              </div>
+        <!-- 6) End Question (appears after name reveal) -->
+        <div class="question-block" id="question-block" style="display:none; margin-top:20px;">
+          <div style="text-align:center; width:100%;">
+            <div style="font-size:15px;color:#6b5566;margin-bottom:8px">Can I have one more year of loving you?</div>
+            <div>
+              <button class="answer-btn yes-soft" id="yes-soft-btn">Yes 💗</button>
+              <button class="answer-btn yes-bold" id="yes-bold-btn">Obviously yes 😭❤️</button>
             </div>
           </div>
         </div>
 
-        <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <button id="back-btn" class="primary-button" style="background:#fff;border:1px solid #ffd8e9;color:var(--accent)">⬅ Back to cake</button>
-          <div class="small-note">Your text will remain until you refresh the page.</div>
-          <button id="change-photo-cta" style="margin-left:auto;padding:8px 12px;border-radius:8px;border:none;background:#ffd1ec;color:#a8004b;cursor:pointer">Change photo ✨</button>
+        <!-- Back & change photo buttons -->
+        <div style="margin-top:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button id="back-btn" class="primary-button" style="background:#fff;border:1px solid #ffd8e9;color:var(--accent)">⬅ Back to cake</button>
+            <div class="small-note">Your text will remain until you refresh the page.</div>
+            <button id="change-photo-cta" style="margin-left:auto;padding:8px 12px;border-radius:8px;border:none;background:#ffd1ec;color:#a8004b;cursor:pointer">Change photo ✨</button>
         </div>
       </div>
 
       <!-- Right column: summary + optional controls -->
       <aside class="letter-card right-col" aria-hidden="true">
         <h4 style="margin-top:0">Highlights</h4>
-        <p style="color:#7b6a73">A romantic, tidy flow: photo, letter, reasons, promise, then the final question that leads to a small celebration.</p>
+        <p style="color:#7b6a73">A romantic, tidy flow: name, reasons, personal letter, photo, promise, then the final question that leads to a small celebration.</p>
         <div style="margin-top:12px;font-size:13px;color:#6b5566">
           Tip: tap your photo to change it. The page auto-saves your letter and photo locally.
         </div>
@@ -373,12 +370,18 @@ function showLetter(){
 
   fadeInAudio(0.55,1200).catch(()=>{});
 
+  // reveal name then question
   herNameReveal.classList.remove('show');
   questionBlock.style.display = 'none';
   setTimeout(()=> {
     herNameReveal.classList.add('show');
-    setTimeout(()=> questionBlock.style.display = 'block', 900);
-  }, 1600);
+    // center burst near name text
+    const nameEl = document.getElementById('her-name-text');
+    setTimeout(() => {
+      burstHeartsOnElement(nameEl, 12);
+      setTimeout(()=> questionBlock.style.display = 'block', 900);
+    }, 350);
+  }, 1400);
 }
 function showLanding(){
   const lp = document.getElementById('letter-panel');
@@ -445,6 +448,44 @@ autoToggle.addEventListener('click', ()=>{
 });
 
 /* ---------- name reveal burst & question (9) ---------- */
+function burstHeartsOnElement(el, count=10){
+  if(!el) return;
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top + rect.height/2;
+  for(let i=0;i<count;i++){
+    createBurstHeart(cx, cy, i);
+  }
+}
+function createBurstHeart(cx, cy, i){
+  const h = document.createElement('div');
+  h.className = 'burst-heart';
+  h.textContent = '❤';
+  h.style.left = cx + 'px';
+  h.style.top  = cy + 'px';
+  document.body.appendChild(h);
+
+  const angle = (Math.random()*Math.PI*2);
+  const distance = 40 + Math.random()*80;
+  const dx = Math.cos(angle) * distance;
+  const dy = Math.sin(angle) * distance - (20 + Math.random()*20);
+
+  const duration = 700 + Math.random()*500;
+  const delay = i * 20;
+
+  h.style.transition = `transform ${duration}ms cubic-bezier(.2,.9,.2,1) ${delay}ms, opacity ${duration}ms linear ${delay}ms`;
+  void h.offsetWidth;
+  h.style.opacity = '1';
+  h.style.transform = `translate(${dx}px, ${dy}px) scale(1.15)`;
+
+  setTimeout(()=>{
+    h.style.opacity = '0';
+    h.style.transform = `translate(${dx*1.1}px, ${dy + 22}px) scale(.85)`;
+  }, duration + delay - 80);
+
+  setTimeout(()=> h.remove(), duration + delay + 220);
+}
+
 const yesSoft = document.getElementById('yes-soft-btn');
 const yesBold = document.getElementById('yes-bold-btn');
 
@@ -487,8 +528,8 @@ function onYesClick(e){
   document.body.appendChild(msg);
   setTimeout(()=> msg.remove(), 2200);
 }
-yesSoft.addEventListener('click', onYesClick);
-yesBold.addEventListener('click', onYesClick);
+yesSoft && yesSoft.addEventListener('click', onYesClick);
+yesBold && yesBold.addEventListener('click', onYesClick);
 
 /* ---------- autosave letter + photo, uploader ---------- */
 const letterBody = document.getElementById('letter-body');
@@ -507,7 +548,7 @@ function loadState(){
     if(p) photoImg.src = p;
   } catch(e){}
 }
-letterBody.addEventListener('input', saveState);
+letterBody && letterBody.addEventListener('input', saveState);
 window.addEventListener('beforeunload', saveState);
 document.addEventListener('DOMContentLoaded', loadState);
 
@@ -519,12 +560,14 @@ uploader.addEventListener('change', (ev)=> {
   const f = ev.target.files && ev.target.files[0];
   if(!f) return;
   const url = URL.createObjectURL(f);
-  photoImg.src = url;
+  if(photoImg) photoImg.src = url;
   saveState();
   setTimeout(()=> URL.revokeObjectURL(url), 60000);
 });
-document.querySelector('.photo-frame').addEventListener('click', ()=> uploader.click());
-document.getElementById('change-photo-cta').addEventListener('click', ()=> uploader.click());
+const photoFrame = document.querySelector('.photo-frame');
+photoFrame && photoFrame.addEventListener('click', ()=> uploader.click());
+const changePhotoCTA = document.getElementById('change-photo-cta');
+changePhotoCTA && changePhotoCTA.addEventListener('click', ()=> uploader.click());
 
 /* reveal letters */
 document.querySelectorAll('.letter').forEach((el,i)=> setTimeout(()=> el.classList.add('show'), i*120));

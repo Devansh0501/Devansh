@@ -23,24 +23,6 @@ body{
   -webkit-tap-highlight-color: transparent;
 }
 
-/* autoplay fallback */
-#music-toggle {
-  position: fixed;
-  left: 14px;
-  bottom: 14px;
-  z-index:1200;
-  background: linear-gradient(135deg,var(--accent),#ff8fc4);
-  color:white;
-  border:none;
-  padding:8px 10px;
-  border-radius:999px;
-  box-shadow:0 8px 18px rgba(0,0,0,.18);
-  cursor:pointer;
-  display:none;
-  font-weight:700;
-  font-size:13px;
-}
-
 /* whisper background phrases */
 .whisper {
   position: absolute;
@@ -166,8 +148,6 @@ body{
 <div class="whisper w3">you made me believe again</div>
 <div class="whisper w4">every day with you is softer</div>
 
-<button id="music-toggle">Play soft music ▶︎</button>
-
 <!-- LANDING -->
 <section id="landing-screen" class="screen" style="display:flex;">
   <div class="panel" id="landing-panel">
@@ -196,13 +176,13 @@ body{
   </div>
 </section>
 
-<!-- LETTER (new requested order) -->
+<!-- LETTER (new requested order: letter -> name -> promise -> photo -> question) -->
 <section id="letter-screen" class="screen" style="display:none;">
   <div class="panel" id="letter-panel" style="width:92%;">
     <div class="inner-wrapper">
       <div class="letter-card">
 
-        <!-- 1) Editable Letter (now at top) -->
+        <!-- 1) Editable Letter (top) -->
         <div id="letter-body" class="letter-body" contenteditable="true" aria-label="Editable letter body">
             <p>My love,</p>
             <p>Today is your day. Replace this with your own message — your memories, promises, and tiny jokes that only we understand.</p>
@@ -225,7 +205,7 @@ body{
           </p>
         </div>
 
-        <!-- 4) Photo Section (moved lower) -->
+        <!-- 4) Photo Section -->
         <div class="photo-block" style="margin-top:20px;">
           <div class="photo-frame" title="Tap to change photo">
             <img id="couple-photo" src="us-photo.jpg" alt="Us together" loading="lazy">
@@ -254,14 +234,13 @@ body{
         </div>
       </div>
 
-      <!-- Right column: Reasons & summary kept here -->
+      <!-- Right column: Reasons & summary -->
       <aside class="letter-card right-col" aria-hidden="true">
         <h4 style="margin-top:0">Reasons I love you</h4>
         <div class="reasons-box" aria-live="polite">
           <div id="reasons-text" class="reasons-text">Tap the button to reveal one reason at a time.</div>
           <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
             <button id="reasons-btn" class="reasons-btn">Reveal another reason</button>
-            <button id="auto-reasons-toggle" class="reasons-btn" style="background:#ffd1ec;color:#a8004b;">Auto</button>
           </div>
         </div>
 
@@ -272,39 +251,39 @@ body{
   </div>
 </section>
 
-<!-- audio -->
+<!-- audio (autoplay attempt with fade-in) -->
 <audio id="bg-music" loop preload="auto">
   <source src="soft-music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* ---------- audio fade/autoplay fallback ---------- */
+/* ---------- audio fade-in autoplay (no play button) ---------- */
 const audio = document.getElementById('bg-music');
-const musicToggle = document.getElementById('music-toggle');
+
 async function fadeInAudio(targetVolume = 0.55, duration = 1800){
-  try{
-    audio.volume = 0.0;
-    if (audio.paused) await audio.play();
-  } catch(e){
-    musicToggle.style.display = 'inline-block';
+  if(!audio) return;
+  try {
+    audio.volume = 0;
+    // try to play (may fail on some browsers until a user interacts)
+    await audio.play();
+  } catch (e) {
+    // autoplay blocked — nothing visible, we simply don't play until user interacts
     return;
   }
   const start = performance.now();
-  return new Promise(res=>{
-    function tick(now){
-      const t = Math.min(1,(now-start)/duration);
+  return new Promise(res => {
+    function step(now) {
+      const t = Math.min(1, (now - start) / duration);
       audio.volume = t * targetVolume;
-      if(t < 1) requestAnimationFrame(tick);
+      if (t < 1) requestAnimationFrame(step);
       else res();
     }
-    requestAnimationFrame(tick);
+    requestAnimationFrame(step);
   });
 }
+
 document.addEventListener('DOMContentLoaded', () => {
-  fadeInAudio().catch(()=>{ musicToggle.style.display = 'inline-block' });
-});
-musicToggle.addEventListener('click', async ()=>{
-  try{ await audio.play(); await fadeInAudio(); musicToggle.style.display='none'; } catch(e){}
+  fadeInAudio().catch(()=>{ /* ignore if blocked */ });
 });
 
 /* ---------- floating click hearts (small) ---------- */
@@ -320,7 +299,7 @@ function spawnHeart(x,y){
 // skip hearts on main controls
 function clickHandler(e){
   const tgt = e.target;
-  const skipSelectors = ['#open-letter-btn','#back-btn','#music-toggle','#reasons-btn','#auto-reasons-toggle','#change-photo-cta','#yes-soft-btn','#yes-bold-btn'];
+  const skipSelectors = ['#open-letter-btn','#back-btn','#reasons-btn','#change-photo-cta','#yes-soft-btn','#yes-bold-btn'];
   for(const s of skipSelectors) if(tgt.closest(s)) return;
   const point = e.touches ? e.touches[0] : e;
   const x = point.clientX || window.innerWidth/2;
@@ -364,6 +343,7 @@ function showLetter(){
     lp.classList.add('fade-slide-in');
   }, { once:true });
 
+  // try to fade-in music when entering letter (best effort)
   fadeInAudio(0.55,1200).catch(()=>{});
 
   // reveal name after showing letter; then show question after burst
@@ -418,9 +398,6 @@ const reasons = [
 let reasonIndex = 0;
 const reasonsBtn = document.getElementById('reasons-btn');
 const reasonsText = document.getElementById('reasons-text');
-const autoToggle = document.getElementById('auto-reasons-toggle');
-let autoMode = false;
-let autoInterval = null;
 
 function showNextReason(){
   const r = reasons[reasonIndex % reasons.length];
@@ -434,15 +411,6 @@ function showNextReason(){
   }
 }
 reasonsBtn && reasonsBtn.addEventListener('click', showNextReason);
-autoToggle && autoToggle.addEventListener('click', ()=>{
-  autoMode = !autoMode;
-  autoToggle.textContent = autoMode ? 'Stop' : 'Auto';
-  if(autoMode){
-    autoInterval = setInterval(showNextReason, 2500);
-  } else {
-    clearInterval(autoInterval);
-  }
-});
 
 /* ---------- name reveal burst & celebrate ---------- */
 function burstHeartsOnElement(el, count=10){
